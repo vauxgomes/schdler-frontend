@@ -1,0 +1,61 @@
+/* https://dribbble.com/shots/16785569-Dashboard-User-Interface-UI/attachments/11836937?mode=media */
+
+.tools {
+    grid-area: tools;
+    position: relative;
+
+    width: var(--tools-width);
+
+    background-color: white;
+    border-right: 1px solid var(--line);
+
+    font-size: small;
+}
+
+.tools-container {
+    position: fixed;
+    top: var(--topbar-height);
+
+    padding: var(--sp-3) var(--sp-4);
+    width: var(--tools-width);
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+/* Tabs */
+
+.tools .tab li {
+    background-color: black;
+    color: white;
+}
+
+.tools h3 {
+    margin-bottom: var(--sp-3);
+}
+
+/* Blocks */
+
+.tools .block {
+    height: auto;
+    background-color: var(--secondary);
+    color: white;
+}
+
+.tools .block span {
+    color: white;
+}
+
+.tools .block h4 {
+    display: block;
+}
+
+.tools .block .acronym {
+    display: none;
+}
+
+.tools .block .icon {
+    display: none;
+}

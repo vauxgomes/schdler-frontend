@@ -1,0 +1,17 @@
+#topbar {
+    grid-area: topbar;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    width: 100%;
+    height: var(--topbar-height);
+
+    background-color: white;
+    border-bottom: 1px solid var(--line);
+}
