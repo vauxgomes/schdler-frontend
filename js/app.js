@@ -76,3 +76,23 @@ function drop(e) {
     // display the draggable element
     draggable.classList.remove("hide");
 }
+
+/* Modal */
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("*[data-toggle=modal]").forEach((toggler) => {
+        toggler.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = e.target.getAttribute("data-target");
+            const modal = document.querySelector(target);
+            modal.classList.add("show");
+        });
+    });
+
+    document.querySelectorAll("*[data-dismiss=modal]").forEach((toggler) => {
+        toggler.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.target.closest(".modal").classList.remove("show");
+        });
+    });
+});

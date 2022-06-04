@@ -5,8 +5,8 @@
     min-height: 100vh;
 
     display: grid;
-    grid-template-columns: min-content auto;
-    grid-template-areas: "tools boards";
+    grid-template-columns: auto min-content;
+    grid-template-areas: "boards tools";
 }
 
 /* Boards */
@@ -15,40 +15,59 @@
     grid-area: boards;
 
     display: grid;
-    grid-template-columns: repeat(1, minmax(565px, 1000px));
-    align-items: flex-start;
+    grid-template-columns: repeat(auto-fit, minmax(var(--board-min-width), var(--board-max-width)));
+    grid-template-rows: min-content;
+
+    align-items: center;
     justify-content: center;
     gap: 1em;
 
-    padding: var(--sp-3);
+    padding: var(--sp-4);
 }
 
 .board {
-    padding: var(--sp-4) var(--sp-5);
+    padding: var(--sp-5) var(--sp-6);
     /* width: 700px; */
     /* max-width: 800px; */
     background-color: white;
     border-radius: 4px;
 }
 
-.board header {
+.board-header {
     padding-bottom: 1em;
     margin-bottom: 1em;
 
     background-color: white;
     border-bottom: 1px solid var(--line);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.board header span {
+.board-header .description span {
     color: var(--gray);
 }
 
-.board .separator {
-    grid-column: 1/6;
+.board-header .menu {
+    cursor: pointer;
 
-    height: 1px;
-    margin: var(--sp-3) 0;
-    background-color: var(--line);
+    padding: var(--sp-4);
+
+    color: gray;
+    text-align: center;
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+.board-header .menu:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
 }
 
 /* Slots */
@@ -69,6 +88,16 @@
     border-radius: 4px;
 }
 
+/* Separator */
+
+.board .separator {
+    grid-column: 1/6;
+
+    height: 1px;
+    margin: var(--sp-4) 0;
+    background-color: var(--line);
+}
+
 /* Blocks */
 
 .block {
@@ -80,7 +109,7 @@
     justify-content: center;
 
     height: 100%;
-    padding: var(--sp-2) var(--sp-3);
+    padding: var(--sp-2) var(--sp-4);
 
     color: black;
     background-color: white;
@@ -94,21 +123,12 @@
     font-size: var(--fs-sm);
 }
 
-.block h4 {
-    display: none;
-    text-shadow: 0px 5px 10px #00000063;
-}
-
 .block .icon {
     color: var(--secodary);
     font-size: var(--fs-sm);
     margin-bottom: var(--sp-2);
 }
 
-.block .acronym {
-    display: block;
-    text-transform: uppercase;
-}
 /* Drag and Drop */
 
 .slot.hide {
@@ -122,5 +142,9 @@
 /* Conflicts */
 
 .block.conflict {
-    background-color: var(--danger);
+    border: 2px solid #f79645;
+}
+
+.block.conflict .icon {
+    color: #f79645;
 }
