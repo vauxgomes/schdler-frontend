@@ -10,7 +10,7 @@
 
 :root {
     --primary: #4361ee;
-    --primary-light: #e7ecfd;
+    --primary-light: #f3f9fe;
 
     --secondary: #6c757d;
     --success: #28a745;
@@ -26,9 +26,13 @@
     --gray-light: #abb2d9;
 
     --line: #e5eaef;
+    --line-light: #f1f4f7;
+
+    --slot-empty: #f8f9fd;
 
     --fs-xs: 0.5em;
     --fs-sm: 0.75em;
+    --fs-smd: 0.85em;
     --fs-md: 1em;
     --fs-lg: 1.25em;
     --fs-xg: 1.75em;
@@ -66,6 +70,7 @@
 body {
     font-size: 16px;
     font-family: "Poppins", sans-serif;
+    color: #394d64;
     background-color: var(--primary-light) !important;
 }
 
@@ -77,4 +82,9 @@ body {
     grid-template-areas:
         "sidebar topbar"
         "sidebar content";
+}
+
+#content {
+    grid-area: content;
+    min-height: 100vh;
 }
