@@ -1,0 +1,17 @@
+#login {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login .wrapper {
+    width: 320px;
+}
+
+#login form {
+    padding: 1.5em;
+    border-radius: 4px;
+    background-color: #fff;
+}

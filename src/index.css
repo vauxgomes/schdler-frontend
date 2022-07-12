@@ -1,0 +1,67 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap"); */
+
+:root {
+    --primary: #4361ee;
+    --primary-light: #f3f9fe;
+
+    --secondary: #6c757d;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #f8f9fa;
+    --dark: #343a40;
+
+    --success: #d1ebc7;
+    --danger: #fae1ba;
+
+    --gray: #8b93bd;
+    --gray-light: #f7fafc;
+
+    --line: #e5eaef;
+    --line-light: #f1f4f7;
+
+    --slot-empty: #f8f9fd;
+
+    --fs-xs: 0.5em;
+    --fs-sm: 0.75em;
+    --fs-smd: 0.85em;
+    --fs-md: 1em;
+    --fs-lg: 1.25em;
+    --fs-xg: 1.75em;
+    --fs-xxg: 2.125em;
+
+    --sp-0: 0;
+    --sp-1: 0.25em;
+    --sp-2: 0.5em;
+    --sp-3: 0.75em;
+    --sp-4: 1em;
+    --sp-5: 1.5em;
+    --sp-6: 2.5em;
+    --sp-7: 4em;
+
+    --sidebar-width: 80px;
+    --topbar-height: 73px;
+    --tools-width: 280px;
+
+    --board-min-width: 565px;
+    --board-max-width: 730px;
+
+    --slot-min-width: 50px;
+    --slot-min-height: 80px;
+
+    --modal-min-width: 300px;
+    --modal-max-width: 730px;
+}
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+body {
+    font-size: 16px;
+    /* font-family: "Poppins", sans-serif; */
+    color: #394d64;
+    background-color: var(--gray-light) !important;
+}
