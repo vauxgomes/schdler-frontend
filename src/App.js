@@ -9,6 +9,7 @@ import ModulesPage from './pages/ModulesPage'
 import LocationsPage from './pages/LocationsPage'
 
 import ContextProvider, { Context } from './providers/context'
+import ProjectsPage from './pages/ProjectsPage'
 
 // Dummy
 const DummyComponent = () => {
@@ -39,6 +40,7 @@ function MainComponent() {
                         path="/locations"
                         element={<LocationsPage />}
                     />
+                    <Route exact path="/" element={<ProjectsPage />} />
                     <Route path="*" element={<DummyComponent />} />
                 </Routes>
             </div>

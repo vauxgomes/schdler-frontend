@@ -47,6 +47,32 @@ class API {
         return response.data
     }
 
+    /* PROJECTS */
+
+    async getProjects() {
+        const response = await this.api.get('/projects', this.config)
+        return response.data
+    }
+
+    async postProject(name) {
+        const response = await this.api.post('/projects', { name }, this.config)
+        return response.data
+    }
+
+    async putProject(id, name) {
+        const response = await this.api.put(
+            `/projects/${id}`,
+            { name },
+            this.config
+        )
+        return response.data
+    }
+
+    async deleteProject(id) {
+        const response = await this.api.delete(`/projects/${id}`, this.config)
+        return response.data
+    }
+
     /* PROFESSORS */
 
     async getProfessors() {

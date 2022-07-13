@@ -104,7 +104,7 @@ export default function LocationsPage() {
         <>
             <header className="d-flex justify-content-between align-items-center mb-3">
                 <h3>Localizações</h3>
-                <i className="text-secondary fa-solid fa-location-dot"></i>
+                <i className="text-primary fa-solid fa-location-dot"></i>
             </header>
 
             <div className="container">
