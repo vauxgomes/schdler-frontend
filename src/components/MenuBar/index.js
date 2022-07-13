@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { Context } from '../../providers/context'
 
 // import './style.css'
 
 export default function MenuBar() {
-    const [isComponents, setComponents] = useState(false)
+    const [showComponentsDropdown, setShowComponentsDropdown] = useState(false)
+    const { setToken } = useContext(Context)
 
     const getMenuClass = ({ isActive }) => {
         return `nav-link ${isActive ? 'active ' : ''}`
@@ -34,8 +36,8 @@ export default function MenuBar() {
 
                     <li
                         className="nav-item dropdown"
-                        onMouseEnter={() => setComponents(true)}
-                        onMouseLeave={() => setComponents(false)}
+                        onMouseEnter={() => setShowComponentsDropdown(true)}
+                        onMouseLeave={() => setShowComponentsDropdown(false)}
                     >
                         <span className="nav-link dropdown-toggle">
                             Componentes
@@ -43,7 +45,7 @@ export default function MenuBar() {
 
                         <ul
                             className={`dropdown-menu ${
-                                isComponents && 'show'
+                                showComponentsDropdown && 'show'
                             }`}
                         >
                             <li>
@@ -79,6 +81,16 @@ export default function MenuBar() {
                         <NavLink to="/" className={getMenuClass}>
                             Projetos
                         </NavLink>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link
+                            to="/"
+                            className="nav-link btn"
+                            onClick={() => setToken(null)}
+                        >
+                            <i className="fas fa-sign-out-alt"></i>
+                        </Link>
                     </li>
                 </ul>
             </div>
