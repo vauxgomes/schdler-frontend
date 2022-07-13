@@ -30,7 +30,7 @@ function MainComponent() {
         <div>
             <MenuBar />
 
-            <div className="container py-3 h-100">
+            <div className="container-xl pt-3">
                 <Routes>
                     <Route exact path="/" element={<ProjectsPage />} />
                     <Route exact path="/boards" element={<BoardsPage />} />

@@ -110,7 +110,7 @@ export default function ProfessorsPage() {
                 <i className="text-secondary fa-solid fa-chalkboard-user"></i>
             </header>
 
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row gap-3 align-items-start">
                     <div className="col-sm-12 col-md-7 col-lg-8 p-0 py-1 card border-0 shadow-sm">
                         <div className="card-body">

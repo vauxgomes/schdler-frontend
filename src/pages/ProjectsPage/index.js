@@ -21,7 +21,7 @@ export default function ProjectsPage() {
 
     useEffect(() => {
         setLoading(true)
-        
+
         api.setToken(token)
         api.getProjects()
             .then((res) => {
@@ -126,7 +126,7 @@ export default function ProjectsPage() {
                 <i className="text-secondary fas fa-project-diagram"></i>
             </header>
 
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row mb-3 gap-3 align-items-start">
                     <div className="col-sm-12 col-md-7 col-lg-8">
                         <div className="row gap-3">

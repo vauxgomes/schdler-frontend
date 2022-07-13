@@ -21,7 +21,7 @@ export default function MenuBar() {
     return (
         <div className="sticky-top">
             <div className="navbar navbar-expand bg-white border-bottom">
-                <div className="container">
+                <div className="container-xl">
                     <span className="logo d-flex align-items-center gap-2 navbar-brand">
                         <img src={logo} alt="Logo" />
                         <div className="d-flex flex-column">
