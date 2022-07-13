@@ -1,4 +1,4 @@
-.item:hover {
+.location-item:hover {
     cursor: pointer;
     background: var(--gray-light);
 }

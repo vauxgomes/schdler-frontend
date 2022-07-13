@@ -162,6 +162,30 @@ class API {
         const response = await this.api.delete(`/locations/${id}`, this.config)
         return response.data
     }
+
+    /* BLOCKS */
+
+    async getBlocks(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/blocks`,
+            this.config
+        )
+        return response.data
+    }
+
+    async postBlock(project_id, professor_id, module_id) {
+        const response = await this.api.post(
+            `/projects/${project_id}/blocks`,
+            { professor_id, module_id },
+            this.config
+        )
+        return response.data
+    }
+
+    async deleteBlock(id) {
+        const response = await this.api.delete(`/projects/${id}`, this.config)
+        return response.data
+    }
 }
 
 export default new API()

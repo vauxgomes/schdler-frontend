@@ -104,7 +104,7 @@ export default function ProfessorsPage() {
         <>
             <header className="d-flex justify-content-between align-items-center mb-3">
                 <h3>Professores</h3>
-                <i className="text-primary fa-solid fa-chalkboard-user"></i>
+                <i className="text-secondary fa-solid fa-chalkboard-user"></i>
             </header>
 
             <div className="container">

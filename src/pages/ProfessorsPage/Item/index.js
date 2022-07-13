@@ -5,7 +5,7 @@ export default function Item({ item, onClick }) {
     return (
         <div
             onClick={onClick}
-            className="d-flex align-items-start justify-content-start gap-3 py-3 px-3 border-top item"
+            className="d-flex align-items-start justify-content-start gap-3 py-3 px-3 border-top professor-item"
         >
             <i className="text-secondary mt-1 fas fa-user-alt"></i>
 

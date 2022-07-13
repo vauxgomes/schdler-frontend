@@ -1,4 +1,4 @@
-.item:hover {
+.professor-item:hover {
     cursor: pointer;
     background: var(--gray-light);
 }

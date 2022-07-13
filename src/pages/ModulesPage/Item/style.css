@@ -1,4 +1,4 @@
-.item:hover {
+.module-item:hover {
     cursor: pointer;
     background: var(--gray-light);
 }

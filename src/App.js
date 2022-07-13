@@ -10,6 +10,7 @@ import LocationsPage from './pages/LocationsPage'
 
 import ContextProvider, { Context } from './providers/context'
 import ProjectsPage from './pages/ProjectsPage'
+import BlocksPage from './pages/BlocksPage'
 
 // Dummy
 const DummyComponent = () => {
@@ -29,6 +30,8 @@ function MainComponent() {
             <MenuBar />
             <div className="container py-3 h-100">
                 <Routes>
+                    <Route exact path="/" element={<ProjectsPage />} />
+                    <Route exact path="/blocks" element={<BlocksPage />} />
                     <Route
                         exact
                         path="/professors"
@@ -40,7 +43,7 @@ function MainComponent() {
                         path="/locations"
                         element={<LocationsPage />}
                     />
-                    <Route exact path="/" element={<ProjectsPage />} />
+
                     <Route path="*" element={<DummyComponent />} />
                 </Routes>
             </div>

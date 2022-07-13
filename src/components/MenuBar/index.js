@@ -15,7 +15,7 @@ export default function MenuBar() {
     }
 
     return (
-        <div className="navbar navbar-expand bg-white border-bottom sticky">
+        <div className="navbar navbar-expand bg-white border-bottom sticky-top">
             <div className="container">
                 <span className="navbar-brand">Schdler</span>
 
