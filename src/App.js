@@ -7,10 +7,11 @@ import LoginPage from './pages/LoginPage'
 import ProfessorsPage from './pages/ProfessorsPage'
 import ModulesPage from './pages/ModulesPage'
 import LocationsPage from './pages/LocationsPage'
-
-import ContextProvider, { Context } from './providers/context'
 import ProjectsPage from './pages/ProjectsPage'
 import BlocksPage from './pages/BlocksPage'
+import BoardsPage from './pages/BoardsPage'
+
+import ContextProvider, { Context } from './providers/context'
 
 // Dummy
 const DummyComponent = () => {
@@ -26,11 +27,13 @@ function MainComponent() {
     }
 
     return (
-        <div className="vh-100">
+        <div>
             <MenuBar />
+
             <div className="container py-3 h-100">
                 <Routes>
                     <Route exact path="/" element={<ProjectsPage />} />
+                    <Route exact path="/boards" element={<BoardsPage />} />
                     <Route exact path="/blocks" element={<BlocksPage />} />
                     <Route
                         exact

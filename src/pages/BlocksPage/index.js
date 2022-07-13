@@ -5,22 +5,64 @@ import Item from './Item'
 
 import { Context } from '../../providers/context'
 import api from '../../services/api'
-import ItemForm from './ItemForm'
+import BlockBuilder from './BlockBuilder'
+
+import './style.css'
 
 export default function BlocksPage() {
-    const [items, setItems] = useState([])
-    const { token, project } = useContext(Context)
+    const { token, project, setLoading } = useContext(Context)
+
+    const [professors, setProfessors] = useState([])
+    const [modules, setModules] = useState([])
+    const [blocks, setBlocks] = useState([])
+
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
+        setLoading(true)
         api.setToken(token)
-        api.getBlocks(project.id)
-            .then((res) => {
-                setItems(res)
-            })
-            .catch((err) => {
-                console.log(err.response.data.message)
-            })
-    }, [token])
+
+        Promise.all([
+            api.getProfessors().then((res) => setProfessors(res)),
+            api.getModules().then((res) => setModules(res)),
+            api
+                .getBlocks(project.id)
+                .then((res) => setBlocks(res))
+                .catch((err) => console.log(err.response.data.message))
+        ]).then(() => setLoading(false))
+    }, [token, project, setLoading])
+
+    const handleSubmit = (professor_id, module_id) => {
+        api.postBlock(project.id, professor_id, module_id).then((res) => {
+            const professor = professors.find(
+                (item) => item.id === Number(professor_id)
+            )
+
+            const module_ = modules.find(
+                (item) => item.id === Number(module_id)
+            )
+
+            const block = {
+                id: res.data.id,
+                professor_id,
+                professor_name: professor.name,
+                module_id,
+                module_name: module_.name
+            }
+
+            setBlocks((prev) => [block, ...prev])
+        })
+    }
+
+    const handleRemove = (id) => {
+        api.deleteBlock(project.id, id)
+            .then(() =>
+                setBlocks((prev) =>
+                    prev.filter((block) => block.id !== Number(id))
+                )
+            )
+            .catch((err) => console.log(err.response.data.message))
+    }
 
     return (
         <>
@@ -29,36 +71,49 @@ export default function BlocksPage() {
                 <i className="text-secondary fa-solid fa-object-group"></i>
             </header>
 
-            <div className="container">
-                <div className="row mb-2">
-                    <div className="col-12 p-1">
-                        <div className="card border-0 shadow-sm">
-                            <div className="card-body">
-                                <div className="input-group">
-                                    <label
-                                        className="input-group-text bg-light"
-                                        htmlFor="filter-input"
-                                    >
-                                        <i className="text-secondary fas fa-filter"></i>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filter-input"
-                                        className="form-control"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+            <div className="blocks-grid">
+                <div className="blocks-search-bar bg-white p-3 rounded shadow-sm">
+                    <div className="input-group">
+                        <label
+                            className="input-group-text bg-light"
+                            htmlFor="filter-input"
+                        >
+                            <i className="text-secondary fas fa-filter"></i>
+                        </label>
+                        <input
+                            type="text"
+                            id="filter-input"
+                            className="form-control"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value.trim())}
+                            onKeyUp={(e) => e.key === 'Escape' && setSearch('')}
+                        />
                     </div>
                 </div>
 
-                <div className="row">
-                    <ItemForm />
+                {/* Builder */}
+                <BlockBuilder
+                    professors={professors}
+                    modules={modules}
+                    onSubmit={handleSubmit}
+                />
 
-                    {items.map((item) => (
-                        <Item key={item.id} item={item} />
+                {/* Items */}
+                {blocks
+                    .filter(
+                        (item) =>
+                            item.professor_name
+                                .toLowerCase()
+                                .includes(search) ||
+                            item.module_name.toLowerCase().includes(search)
+                    )
+                    .map((item) => (
+                        <Item
+                            item={item}
+                            key={item.id}
+                            onClick={() => handleRemove(item.id)}
+                        />
                     ))}
-                </div>
             </div>
         </>
     )

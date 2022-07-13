@@ -15,9 +15,11 @@ export default function LocationsPage() {
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
 
-    const { token } = useContext(Context)
+    const { token, setLoading } = useContext(Context)
 
     useEffect(() => {
+        setLoading(true)
+        
         api.setToken(token)
         api.getLocations()
             .then((res) => {
@@ -26,7 +28,8 @@ export default function LocationsPage() {
             .catch((err) => {
                 console.log(err.response.data.message)
             })
-    }, [token])
+            .then(() => setLoading(false))
+    }, [token, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)

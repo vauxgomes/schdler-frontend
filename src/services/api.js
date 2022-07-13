@@ -182,8 +182,11 @@ class API {
         return response.data
     }
 
-    async deleteBlock(id) {
-        const response = await this.api.delete(`/projects/${id}`, this.config)
+    async deleteBlock(project_id, block_id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/blocks/${block_id}`,
+            this.config
+        )
         return response.data
     }
 }

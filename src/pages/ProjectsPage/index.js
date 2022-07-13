@@ -8,7 +8,7 @@ import { Context } from '../../providers/context'
 import api from '../../services/api'
 
 export default function ProjectsPage() {
-    const { token, project, setProject } = useContext(Context)
+    const { token, project, setProject, setLoading } = useContext(Context)
 
     const [id, setId] = useState('')
     const [name, setName] = useState('')
@@ -20,6 +20,8 @@ export default function ProjectsPage() {
     const [alertMessage, setAlertMessage] = useState('')
 
     useEffect(() => {
+        setLoading(true)
+        
         api.setToken(token)
         api.getProjects()
             .then((res) => {
@@ -28,7 +30,8 @@ export default function ProjectsPage() {
             .catch((err) => {
                 console.log(err.response.data.message)
             })
-    }, [token])
+            .then(() => setLoading(false))
+    }, [token, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)

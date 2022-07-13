@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../providers/context'
+import LoadBar from '../LoadBar'
 
-// import './style.css'
+import logo from '../../assets/img/logo64.png'
+import './style.css'
 
 export default function MenuBar() {
     const [showComponentsDropdown, setShowComponentsDropdown] = useState(false)
@@ -17,83 +19,96 @@ export default function MenuBar() {
     }
 
     return (
-        <div className="navbar navbar-expand bg-white border-bottom sticky-top">
-            <div className="container">
-                <span className="navbar-brand">Schdler</span>
+        <div className="sticky-top">
+            <div className="navbar navbar-expand bg-white border-bottom">
+                <div className="container">
+                    <span className="logo d-flex align-items-center gap-2 navbar-brand">
+                        <img src={logo} alt="Logo" />
+                        <div className="d-flex flex-column">
+                            <span>Schdler</span>
+                            <small>by Vaux Gomes</small>
+                        </div>
+                    </span>
 
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <NavLink to="/boards" className={getMenuClass}>
-                            Quadros
-                        </NavLink>
-                    </li>
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <NavLink to="/boards" className={getMenuClass}>
+                                Quadros
+                            </NavLink>
+                        </li>
 
-                    <li className="nav-item">
-                        <NavLink to="/blocks" className={getMenuClass}>
-                            Blocos
-                        </NavLink>
-                    </li>
+                        <li className="nav-item">
+                            <NavLink to="/blocks" className={getMenuClass}>
+                                Blocos
+                            </NavLink>
+                        </li>
 
-                    <li
-                        className="nav-item dropdown"
-                        onMouseEnter={() => setShowComponentsDropdown(true)}
-                        onMouseLeave={() => setShowComponentsDropdown(false)}
-                    >
-                        <span className="nav-link dropdown-toggle">
-                            Componentes
-                        </span>
-
-                        <ul
-                            className={`dropdown-menu ${
-                                showComponentsDropdown && 'show'
-                            }`}
+                        <li
+                            className="nav-item dropdown"
+                            onMouseEnter={() => setShowComponentsDropdown(true)}
+                            onMouseLeave={() =>
+                                setShowComponentsDropdown(false)
+                            }
                         >
-                            <li>
-                                <NavLink
-                                    to="/professors"
-                                    className={getSubmenuClass}
-                                >
-                                    Professores
-                                </NavLink>
-                            </li>
+                            <span className="nav-link dropdown-toggle">
+                                Componentes
+                            </span>
 
-                            <li>
-                                <NavLink
-                                    to="/modules"
-                                    className={getSubmenuClass}
-                                >
-                                    Disciplinas
-                                </NavLink>
-                            </li>
+                            <ul
+                                className={`dropdown-menu ${
+                                    showComponentsDropdown && 'show'
+                                }`}
+                            >
+                                <li>
+                                    <NavLink
+                                        to="/professors"
+                                        className={getSubmenuClass}
+                                    >
+                                        Professores
+                                    </NavLink>
+                                </li>
 
-                            <li>
-                                <NavLink
-                                    to="/locations"
-                                    className={getSubmenuClass}
-                                >
-                                    Locais
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </li>
+                                <li>
+                                    <NavLink
+                                        to="/modules"
+                                        className={getSubmenuClass}
+                                    >
+                                        Disciplinas
+                                    </NavLink>
+                                </li>
 
-                    <li className="nav-item">
-                        <NavLink to="/" className={getMenuClass}>
-                            Projetos
-                        </NavLink>
-                    </li>
+                                <li>
+                                    <NavLink
+                                        to="/locations"
+                                        className={getSubmenuClass}
+                                    >
+                                        Locais
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <li className="nav-item">
-                        <Link
-                            to="/"
-                            className="nav-link btn"
-                            onClick={() => setToken(null)}
-                        >
-                            <i className="fas fa-sign-out-alt"></i>
-                        </Link>
-                    </li>
-                </ul>
+                        <li className="nav-item">
+                            <NavLink to="/" className={getMenuClass}>
+                                Projetos
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                            <Link
+                                to="/"
+                                className="nav-link btn"
+                                onClick={() => setToken(null)}
+                            >
+                                <i className="fas fa-sign-out-alt"></i>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
+            {/* Load Bar */}
+            <LoadBar />
         </div>
     )
 }

@@ -8,6 +8,8 @@ export default function ContextProvider({ children }) {
         JSON.parse(localStorage.getItem('project'))
     )
 
+    const [isLoading, setLoading] = useState(true)
+
     const setToken = (token) => {
         setToken__(token)
         localStorage.setItem('token', token)
@@ -20,7 +22,18 @@ export default function ContextProvider({ children }) {
 
     // Provider
     return (
-        <Context.Provider value={{ token, setToken, project, setProject }}>
+        <Context.Provider
+            value={{
+                token,
+                setToken,
+
+                project,
+                setProject,
+
+                isLoading,
+                setLoading
+            }}
+        >
             {children}
         </Context.Provider>
     )

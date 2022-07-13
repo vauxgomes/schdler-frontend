@@ -1,8 +1,0 @@
-.item-empty {
-    cursor: pointer;
-    border: 1px dashed var(--line);
-}
-
-.item-empty:hover span {
-    text-decoration: underline;
-}
