@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { Context } from '../../providers/context'
+import React, { useContext } from 'react'
+import { Context } from '../../providers/contexts/context'
 import './style.css'
 
 export default function LoadBar() {

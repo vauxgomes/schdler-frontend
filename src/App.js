@@ -11,7 +11,7 @@ import ProjectsPage from './pages/ProjectsPage'
 import BlocksPage from './pages/BlocksPage'
 import BoardsPage from './pages/BoardsPage'
 
-import ContextProvider, { Context } from './providers/context'
+import ContextProvider, { Context } from './providers/contexts/context'
 
 // Dummy
 const DummyComponent = () => {

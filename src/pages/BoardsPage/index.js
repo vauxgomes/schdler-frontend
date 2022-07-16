@@ -15,7 +15,7 @@ export default function BoardsPage() {
                         <div className="board-header">
                             <div className="description">
                                 <small>Noite</small>
-                                <h5>Semestre 1</h5>
+                                <h6>Semestre 1</h6>
                             </div>
 
                             <div className="menu">
@@ -29,9 +29,14 @@ export default function BoardsPage() {
                         <div className="slots">
                             <div className="slot"></div>
                             <div className="slot">
-                                <div id="2" class="block" draggable="true">
-                                    <small>Nome Sobrenome</small>
-                                    <span>Lógica de Programação</span>
+                                <div id="2" className="block" draggable="true">
+                                    <span className="module">
+                                        Lógica de Programação
+                                    </span>
+                                    <span className="professor">
+                                        Vaux Gomes
+                                    </span>
+                                    <i className="grip fas fa-grip-lines"></i>
                                 </div>
                             </div>
                             <div className="slot"></div>
@@ -49,7 +54,7 @@ export default function BoardsPage() {
                         <div className="board-header">
                             <div className="description">
                                 <small>Noite</small>
-                                <h5>Semestre 1</h5>
+                                <h6>Semestre 1</h6>
                             </div>
 
                             <div className="menu">
@@ -63,9 +68,14 @@ export default function BoardsPage() {
                         <div className="slots">
                             <div className="slot"></div>
                             <div className="slot">
-                                <div id="2" class="block" draggable="true">
-                                    <small>Nome Sobrenome</small>
-                                    <span>Lógica de Programação</span>
+                                <div id="2" className="block" draggable="true">
+                                    <span className="module">
+                                        Lógica de Programação
+                                    </span>
+                                    <span className="professor">
+                                        Vaux Gomes
+                                    </span>
+                                    <i className="grip fas fa-grip-lines"></i>
                                 </div>
                             </div>
                             <div className="slot"></div>
@@ -83,7 +93,7 @@ export default function BoardsPage() {
                         <div className="board-header">
                             <div className="description">
                                 <small>Noite</small>
-                                <h5>Semestre 1</h5>
+                                <h6>Semestre 1</h6>
                             </div>
 
                             <div className="menu">
@@ -97,9 +107,14 @@ export default function BoardsPage() {
                         <div className="slots">
                             <div className="slot"></div>
                             <div className="slot">
-                                <div id="2" class="block" draggable="true">
-                                    <small>Nome Sobrenome</small>
-                                    <span>Lógica de Programação</span>
+                                <div id="2" className="block" draggable="true">
+                                    <span className="module">
+                                        Lógica de Programação
+                                    </span>
+                                    <span className="professor">
+                                        Vaux Gomes
+                                    </span>
+                                    <i className="grip fas fa-grip-lines"></i>
                                 </div>
                             </div>
                             <div className="slot"></div>
@@ -117,7 +132,7 @@ export default function BoardsPage() {
                         <div className="board-header">
                             <div className="description">
                                 <small>Noite</small>
-                                <h5>Semestre 1</h5>
+                                <h6>Semestre 1</h6>
                             </div>
 
                             <div className="menu">
@@ -131,9 +146,14 @@ export default function BoardsPage() {
                         <div className="slots">
                             <div className="slot"></div>
                             <div className="slot">
-                                <div id="2" class="block" draggable="true">
-                                    <small>Nome Sobrenome</small>
-                                    <span>Lógica de Programação</span>
+                                <div id="2" className="block" draggable="true">
+                                    <span className="module">
+                                        Lógica de Programação
+                                    </span>
+                                    <span className="professor">
+                                        Vaux Gomes
+                                    </span>
+                                    <i className="grip fas fa-grip-lines"></i>
                                 </div>
                             </div>
                             <div className="slot"></div>
@@ -148,7 +168,7 @@ export default function BoardsPage() {
                     </div>
                 </div>
 
-                <div className="tools-container sticky">Tools</div>
+                <div className="tools-container shadow-sm">Tools</div>
             </div>
         </>
     )

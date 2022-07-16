@@ -110,6 +110,7 @@
 
 .block {
     cursor: pointer;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -117,23 +118,30 @@
     justify-content: center;
 
     height: 100%;
-    padding: var(--sp-2);
+    padding: var(--sp-2) var(--sp-4);
 
     color: black;
     background-color: white;
     border-radius: 4px;
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.block small {
+.block .professor {
     display: block;
-    padding-bottom: var(--sp-1);
-    margin-bottom: var(--sp-1);
-
+    
     color: var(--gray);
     font-size: var(--fs-sm);
-    border-bottom: 1px solid var(--line);
+}
+
+.block .module {
+    font-size: var(--fs-smd);
+}
+
+.block .grip {
+    position: absolute;
+    right: var(--sp-2);
+    top: var(--sp-1);
 }
 
 /* DRAG AND DROP */

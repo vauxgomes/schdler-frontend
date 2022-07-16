@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Context } from '../../providers/context'
+import { Context } from '../../providers/contexts/context'
 import LoadBar from '../LoadBar'
 
 import logo from '../../assets/img/logo64.png'

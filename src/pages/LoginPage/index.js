@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import Alert, { AlertTypes } from '../../components/Alert'
 
-import { Context } from '../../providers/context'
+import { Context } from '../../providers/contexts/context'
 
-import api from '../../services/api'
+import api from '../../providers/services/api'
 import logo from '../../assets/img/logo64.png'
 import './style.css'
 

@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import Alert, { AlertTypes } from '../../components/Alert'
 import Item from './Item'
 
-import { Context } from '../../providers/context'
-import api from '../../services/api'
+import { Context } from '../../providers/contexts/context'
+import api from '../../providers/services/api'
 
 export default function ProjectsPage() {
     const { token, project, setProject, setLoading } = useContext(Context)
