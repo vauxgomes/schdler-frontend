@@ -75,91 +75,145 @@ class API {
 
     /* PROFESSORS */
 
-    async getProfessors() {
-        const response = await this.api.get('/professors', this.config)
+    async getProfessors(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/professors`,
+            this.config
+        )
         return response.data
     }
 
-    async postProfessor(name) {
+    async postProfessor(project_id, name, short, code, color) {
         const response = await this.api.post(
-            '/professors',
-            { name },
+            `/projects/${project_id}/professors`,
+            { name, short, code, color },
             this.config
         )
         return response.data
     }
 
-    async putProfessor(id, name) {
+    async putProfessor(project_id, id, name, short, code, color) {
         const response = await this.api.put(
-            `/professors/${id}`,
-            { name },
+            `/projects/${project_id}/professors/${id}`,
+            { name, short, code, color },
             this.config
         )
         return response.data
     }
 
-    async deleteProfessor(id) {
-        const response = await this.api.delete(`/professors/${id}`, this.config)
+    async deleteProfessor(project_id, id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/professors/${id}`,
+            this.config
+        )
         return response.data
     }
 
     /* MODULES */
 
-    async getModules() {
-        const response = await this.api.get('/modules', this.config)
+    async getModules(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/modules`,
+            this.config
+        )
         return response.data
     }
 
-    async postModule(name, credits) {
+    async postModule(project_id, name, short, code, credits) {
         const response = await this.api.post(
-            '/modules',
-            { name, credits },
+            `/projects/${project_id}/modules`,
+            { name, short, code, credits },
             this.config
         )
         return response.data
     }
 
-    async putModule(id, name, credits) {
+    async putModule(project_id, id, name, short, code, credits) {
         const response = await this.api.put(
-            `/modules/${id}`,
-            { name, credits },
+            `/projects/${project_id}/modules/${id}`,
+            { name, short, code, credits },
             this.config
         )
         return response.data
     }
 
-    async deleteModule(id) {
-        const response = await this.api.delete(`/modules/${id}`, this.config)
+    async deleteModule(project_id, id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/modules/${id}`,
+            this.config
+        )
         return response.data
     }
 
     /* LOCATIONS */
 
-    async getLocations() {
-        const response = await this.api.get('/locations', this.config)
+    async getLocations(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/locations`,
+            this.config
+        )
         return response.data
     }
 
-    async postLocation(name) {
+    async postLocation(project_id, name, short, code, color, capacity) {
         const response = await this.api.post(
-            '/locations',
-            { name },
+            `/projects/${project_id}/locations`,
+            { name, short, code, color, capacity },
             this.config
         )
         return response.data
     }
 
-    async putLocation(id, name) {
+    async putLocation(project_id, id, name, short, code, color, capacity) {
         const response = await this.api.put(
-            `/locations/${id}`,
-            { name },
+            `/projects/${project_id}/locations/${id}`,
+            { name, short, code, color, capacity },
             this.config
         )
         return response.data
     }
 
-    async deleteLocation(id) {
-        const response = await this.api.delete(`/locations/${id}`, this.config)
+    async deleteLocation(project_id, id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/locations/${id}`,
+            this.config
+        )
+        return response.data
+    }
+
+    /* TIMETABLES */
+
+    async getTimetables(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/timetables`,
+            this.config
+        )
+        return response.data
+    }
+
+    async postTimetable(project_id, start, end, shift) {
+        const response = await this.api.post(
+            `/projects/${project_id}/timetables`,
+            { start, end, shift },
+            this.config
+        )
+        return response.data
+    }
+
+    async putTimetable(project_id, id, start, end, shift) {
+        const response = await this.api.put(
+            `/projects/${project_id}/timetables/${id}`,
+            { start, end, shift },
+            this.config
+        )
+        return response.data
+    }
+
+    async deleteTimetable(project_id, id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/timetables/${id}`,
+            this.config
+        )
         return response.data
     }
 

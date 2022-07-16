@@ -1,36 +1,40 @@
 // https://dribbble.com/shots/16083913-Account-Settings-Template-Webpixels
 
 import React, { useContext, useEffect, useState } from 'react'
-import Alert, { AlertTypes } from '../../components/Alert'
-import Item from './Item'
 
-import { Context } from '../..//providers/contexts/context'
+import Alert, { AlertTypes } from '../../components/Alert'
+import ModuleItem from './ModuleItem'
+
+import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
 
-export default function ProfessorsPage() {
+export default function ModulesPage() {
     const [id, setId] = useState('')
     const [name, setName] = useState('')
-    const [credits, setCredits] = useState(20)
-    const [items, setItems] = useState([])
+    const [short, setShort] = useState('')
+    const [code, setCode] = useState('')
+    const [credits, setCredits] = useState(1)
+
+    const [modules, setModules] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
 
-    const { token, setLoading } = useContext(Context)
+    const { token, project, setLoading } = useContext(Context)
 
     useEffect(() => {
         setLoading(true)
 
         api.setToken(token)
-        api.getModules()
+        api.getModules(project.id)
             .then((res) => {
-                setItems(res)
+                setModules(res)
             })
             .catch((err) => {
                 console.log(err.response.data.message)
             })
             .then(() => setLoading(false))
-    }, [token, setLoading])
+    }, [token, project, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)
@@ -47,43 +51,47 @@ export default function ProfessorsPage() {
 
         if (!id) {
             // POST
-            api.postModule(name, credits)
+            api.postModule(project.id, name, short, code, credits)
                 .then((res) => {
                     const item = {
+                        id: res.data.id,
                         name,
-                        credits,
-                        id: res.data.id
+                        short,
+                        code,
+                        credits
                     }
 
-                    setItems((prev) => [...prev, item])
+                    setModules((prev) => [...prev, item])
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         } else {
             // PUT
-            api.putModule(id, name, credits)
+            api.putModule(project.id, id, name, short, code, credits)
                 .then((res) => {
-                    setItems(
-                        items.map((item) =>
-                            item.id === id ? { ...item, name, credits } : item
+                    setModules(
+                        modules.map((item) =>
+                            item.id === id
+                                ? { ...item, name, short, code, credits }
+                                : item
                         )
                     )
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         }
-
-        onReset()
     }
 
     const onRemove = () => {
         hideAlert()
 
-        api.deleteModule(id)
+        api.deleteModule(project.id, id)
             .then((res) => {
-                setItems((prev) => prev.filter((item) => item.id !== id))
+                setModules((prev) => prev.filter((item) => item.id !== id))
             })
             .catch((err) => {
                 showAlert(err.response.data.message)
@@ -96,13 +104,18 @@ export default function ProfessorsPage() {
         hideAlert()
         setId('')
         setName('')
-        setCredits(20)
+        setShort('')
+        setCode('')
+        setCredits(1)
     }
 
     const onLoadItem = (item) => {
         hideAlert()
         setId(item.id)
         setName(item.name)
+        setShort(item.short)
+        setCode(item.code)
+        setCredits(item.credits)
     }
 
     return (
@@ -133,46 +146,90 @@ export default function ProfessorsPage() {
                                 </Alert>
                             )}
                             <form onSubmit={onSubmit}>
-                                {/* Name */}
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="name-input"
-                                        className="form-label"
-                                    >
-                                        Nome
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name-input"
-                                        className="form-control"
-                                        required={true}
-                                        value={name}
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
-                                    />
+                                <div className="row mb-3">
+                                    {/* Name */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="name-input"
+                                            className="form-label"
+                                        >
+                                            Nome*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={name}
+                                            onChange={(e) =>
+                                                setName(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Short */}
+                                    <div className="col-3">
+                                        <label
+                                            htmlFor="short-input"
+                                            className="form-label"
+                                        >
+                                            Abrev.*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="short-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={short}
+                                            maxLength="20"
+                                            onChange={(e) =>
+                                                setShort(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
 
-                                {/* Credits */}
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="credits-input"
-                                        className="form-label"
-                                    >
-                                        Creditos
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="credits-input"
-                                        className="form-control"
-                                        required={true}
-                                        value={credits}
-                                        onChange={(e) =>
-                                            setCredits(e.target.value)
-                                        }
-                                        min={0}
-                                        step={10}
-                                    />
+                                <div className="row mb-3">
+                                    {/* Code */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="code-input"
+                                            className="form-label"
+                                        >
+                                            Código
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="code-input"
+                                            className="form-control"
+                                            required={false}
+                                            value={code}
+                                            onChange={(e) =>
+                                                setCode(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Credits */}
+                                    <div className="col-3">
+                                        <label
+                                            htmlFor="credits-input"
+                                            className="form-label"
+                                        >
+                                            Créditos*
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="credits-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={credits}
+                                            min={0}
+                                            onChange={(e) =>
+                                                setCredits(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Buttons */}
@@ -213,8 +270,8 @@ export default function ProfessorsPage() {
                                 Lista de Disciplinas
                             </p>
 
-                            {items.map((item) => (
-                                <Item
+                            {modules.map((item) => (
+                                <ModuleItem
                                     key={item.id}
                                     item={item}
                                     onClick={() => onLoadItem(item)}

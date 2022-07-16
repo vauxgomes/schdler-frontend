@@ -1,11 +1,12 @@
 // https://dribbble.com/shots/16083913-Account-Settings-Template-Webpixels
 
 import React, { useContext, useEffect, useState } from 'react'
-import Item from './Item'
+
+import BlockItem from './BlockItem'
+import BlockBuilder from './BlockBuilder'
 
 import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
-import BlockBuilder from './BlockBuilder'
 
 import './style.css'
 
@@ -23,8 +24,8 @@ export default function BlocksPage() {
         api.setToken(token)
 
         Promise.all([
-            api.getProfessors().then((res) => setProfessors(res)),
-            api.getModules().then((res) => setModules(res)),
+            api.getProfessors(project.id).then((res) => setProfessors(res)),
+            api.getModules(project.id).then((res) => setModules(res)),
             api
                 .getBlocks(project.id)
                 .then((res) => setBlocks(res))
@@ -108,7 +109,7 @@ export default function BlocksPage() {
                             item.module_name.toLowerCase().includes(search)
                     )
                     .map((item) => (
-                        <Item
+                        <BlockItem
                             item={item}
                             key={item.id}
                             onClick={() => handleRemove(item.id)}

@@ -1,8 +1,10 @@
 // https://dribbble.com/shots/16083913-Account-Settings-Template-Webpixels
 
 import React, { useContext, useEffect, useState } from 'react'
+
 import Alert, { AlertTypes } from '../../components/Alert'
-import Item from './Item'
+import ColorChooser from '../../components/ColorChooser'
+import LocationItem from './LocationItem'
 
 import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
@@ -10,26 +12,31 @@ import api from '../../providers/services/api'
 export default function LocationsPage() {
     const [id, setId] = useState('')
     const [name, setName] = useState('')
-    const [items, setItems] = useState([])
+    const [short, setShort] = useState('')
+    const [code, setCode] = useState('')
+    const [color, setColor] = useState('#000000')
+    const [capacity, setCapacity] = useState(1)
+
+    const [locations, setLocations] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
 
-    const { token, setLoading } = useContext(Context)
+    const { token, project, setLoading } = useContext(Context)
 
     useEffect(() => {
         setLoading(true)
-        
+
         api.setToken(token)
-        api.getLocations()
+        api.getLocations(project.id)
             .then((res) => {
-                setItems(res)
+                setLocations(res)
             })
             .catch((err) => {
                 console.log(err.response.data.message)
             })
             .then(() => setLoading(false))
-    }, [token, setLoading])
+    }, [token, project, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)
@@ -46,43 +53,56 @@ export default function LocationsPage() {
 
         if (!id) {
             // POST
-            api.postLocation(name)
+            api.postLocation(project.id, name, short, code, color, capacity)
                 .then((res) => {
                     const item = {
-                        name,
                         id: res.data.id,
+                        name,
+                        short,
+                        code,
+                        color,
+                        capacity,
                         created_at: '--'
                     }
 
-                    setItems((prev) => [...prev, item])
+                    setLocations((prev) => [...prev, item])
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         } else {
             // PUT
-            api.putLocation(id, name)
+            api.putLocation(project.id, id, name, short, code, color, capacity)
                 .then((res) => {
-                    setItems(
-                        items.map((item) =>
-                            item.id === id ? { ...item, name } : item
+                    setLocations(
+                        locations.map((item) =>
+                            item.id === id
+                                ? {
+                                      ...item,
+                                      name,
+                                      short,
+                                      code,
+                                      color,
+                                      capacity
+                                  }
+                                : item
                         )
                     )
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         }
-
-        onReset()
     }
 
     const onRemove = () => {
         hideAlert()
 
-        api.deleteLocation(id)
+        api.deleteLocation(project.id, id)
             .then((res) => {
-                setItems((prev) => prev.filter((item) => item.id !== id))
+                setLocations((prev) => prev.filter((item) => item.id !== id))
             })
             .catch((err) => {
                 showAlert(err.response.data.message)
@@ -95,12 +115,20 @@ export default function LocationsPage() {
         hideAlert()
         setId('')
         setName('')
+        setShort('')
+        setCode('')
+        setColor('#000000')
+        setCapacity(1)
     }
 
     const onLoadItem = (item) => {
         hideAlert()
         setId(item.id)
         setName(item.name)
+        setShort(item.short)
+        setCode(item.code)
+        setColor(item.color)
+        setCapacity(item.capacity)
     }
 
     return (
@@ -131,24 +159,102 @@ export default function LocationsPage() {
                                 </Alert>
                             )}
                             <form onSubmit={onSubmit}>
-                                {/* Name */}
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="name-input"
-                                        className="form-label"
-                                    >
-                                        Nome
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name-input"
-                                        className="form-control"
-                                        required={true}
-                                        value={name}
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
-                                    />
+                                <div className="row mb-3">
+                                    {/* Name */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="name-input"
+                                            className="form-label"
+                                        >
+                                            Nome*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={name}
+                                            onChange={(e) =>
+                                                setName(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Short */}
+                                    <div className="col-3">
+                                        <label
+                                            htmlFor="short-input"
+                                            className="form-label"
+                                        >
+                                            Abrev.*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="short-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={short}
+                                            maxLength="20"
+                                            onChange={(e) =>
+                                                setShort(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    {/* Code */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="code-input"
+                                            className="form-label"
+                                        >
+                                            Código
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="code-input"
+                                            className="form-control"
+                                            required={false}
+                                            value={code}
+                                            onChange={(e) =>
+                                                setCode(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Capacity */}
+                                    <div className="col-3">
+                                        <label
+                                            htmlFor="color-input"
+                                            className="form-label"
+                                        >
+                                            Capacidade*
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="color-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={capacity}
+                                            min={1}
+                                            onChange={(e) =>
+                                                setCapacity(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Color */}
+                                    <div className="col-3">
+                                        <label className="form-label">
+                                            Cor*
+                                        </label>
+
+                                        <ColorChooser
+                                            color={color}
+                                            onChange={setColor}
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Buttons */}
@@ -189,8 +295,8 @@ export default function LocationsPage() {
                                 Lista de Localizações
                             </p>
 
-                            {items.map((item) => (
-                                <Item
+                            {locations.map((item) => (
+                                <LocationItem
                                     key={item.id}
                                     item={item}
                                     onClick={() => onLoadItem(item)}

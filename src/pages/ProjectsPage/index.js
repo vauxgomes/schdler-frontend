@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 import Alert, { AlertTypes } from '../../components/Alert'
-import Item from './Item'
+import ProjectItem from './ProjectItem'
 
 import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
@@ -14,7 +14,7 @@ export default function ProjectsPage() {
     const [name, setName] = useState('')
     const [projectId, setProjectId] = useState(project?.id || '')
 
-    const [items, setItems] = useState([])
+    const [projects, setProjects] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
@@ -25,7 +25,7 @@ export default function ProjectsPage() {
         api.setToken(token)
         api.getProjects()
             .then((res) => {
-                setItems(res)
+                setProjects(res)
             })
             .catch((err) => {
                 console.log(err.response.data.message)
@@ -56,7 +56,7 @@ export default function ProjectsPage() {
                         name
                     }
 
-                    setItems((prev) => [...prev, item])
+                    setProjects((prev) => [...prev, item])
                 })
                 .catch((err) => {
                     showAlert(err.response.data.message)
@@ -65,8 +65,8 @@ export default function ProjectsPage() {
             // PUT
             api.putProject(id, name)
                 .then((res) => {
-                    setItems(
-                        items.map((item) =>
+                    setProjects(
+                        projects.map((item) =>
                             item.id === id ? { ...item, name } : item
                         )
                     )
@@ -84,7 +84,7 @@ export default function ProjectsPage() {
 
         api.deleteProject(id)
             .then((res) => {
-                setItems((prev) => prev.filter((item) => item.id !== id))
+                setProjects((prev) => prev.filter((item) => item.id !== id))
 
                 if (id === projectId) {
                     setProjectId('')
@@ -111,12 +111,12 @@ export default function ProjectsPage() {
     }
 
     const onChangeProject = (e) => {
-        const idx = items.findIndex(
+        const idx = projects.findIndex(
             (item) => item.id === Number(e.target.value)
         )
 
-        setProjectId(items[idx].id)
-        setProject(items[idx])
+        setProjectId(projects[idx].id)
+        setProject(projects[idx])
     }
 
     return (
@@ -147,7 +147,7 @@ export default function ProjectsPage() {
                                             Selecione um Projeto
                                         </option>
 
-                                        {items.map((item) => (
+                                        {projects.map((item) => (
                                             <option
                                                 value={item.id}
                                                 key={item.id}
@@ -239,8 +239,8 @@ export default function ProjectsPage() {
                                 Lista de Projetos
                             </p>
 
-                            {items.map((item) => (
-                                <Item
+                            {projects.map((item) => (
+                                <ProjectItem
                                     key={item.id}
                                     item={item}
                                     onClick={() => onLoadItem(item)}

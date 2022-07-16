@@ -2,12 +2,16 @@ import React, { useContext } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import MenuBar from './components/MenuBar'
+import ColorChooser from './components/ColorChooser'
 
 import LoginPage from './pages/LoginPage'
+import ProjectsPage from './pages/ProjectsPage'
+
 import ProfessorsPage from './pages/ProfessorsPage'
 import ModulesPage from './pages/ModulesPage'
 import LocationsPage from './pages/LocationsPage'
-import ProjectsPage from './pages/ProjectsPage'
+import TimetablesPage from './pages/TimetablesPage'
+
 import BlocksPage from './pages/BlocksPage'
 import BoardsPage from './pages/BoardsPage'
 
@@ -45,6 +49,11 @@ function MainComponent() {
                         exact
                         path="/locations"
                         element={<LocationsPage />}
+                    />
+                    <Route
+                        exact
+                        path="/timetables"
+                        element={<TimetablesPage />}
                     />
 
                     <Route path="*" element={<DummyComponent />} />

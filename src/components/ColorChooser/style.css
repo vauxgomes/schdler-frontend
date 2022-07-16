@@ -1,0 +1,40 @@
+.color-container {
+    position: relative;
+    cursor: pointer;
+
+    width: min-content;
+    padding: var(--sp-1);
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+
+.color-grid {
+    position: absolute;
+    top: 37px;
+    left: 0;
+
+    z-index: 100;
+
+    padding: var(--sp-1);
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+
+    display: none;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.color-container:hover .color-grid {
+    display: grid;
+}
+
+.color-item {
+    color: white;
+    padding: var(--sp-1);
+    min-width: 27px;
+    min-height: 27px;
+}
+
+.color-grid .color-item:hover {
+    border: 1px solid black;
+}

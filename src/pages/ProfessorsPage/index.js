@@ -1,8 +1,10 @@
 // https://dribbble.com/shots/16083913-Account-Settings-Template-Webpixels
 
 import React, { useContext, useEffect, useState } from 'react'
+
 import Alert, { AlertTypes } from '../../components/Alert'
-import Item from './Item'
+import ColorChooser from '../../components/ColorChooser'
+import ProfessorItem from './ProfessorItem'
 
 import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
@@ -10,26 +12,30 @@ import api from '../../providers/services/api'
 export default function ProfessorsPage() {
     const [id, setId] = useState('')
     const [name, setName] = useState('')
-    const [items, setItems] = useState([])
+    const [short, setShort] = useState('')
+    const [code, setCode] = useState('')
+    const [color, setColor] = useState('#000000')
+
+    const [professors, setProfessors] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
 
-    const { token, setLoading } = useContext(Context)
+    const { token, project, setLoading } = useContext(Context)
 
     useEffect(() => {
         setLoading(true)
-        
+
         api.setToken(token)
-        api.getProfessors()
+        api.getProfessors(project.id)
             .then((res) => {
-                setItems(res)
+                setProfessors(res)
             })
             .catch((err) => {
                 console.log(err.response.data.message)
             })
             .then(() => setLoading(false))
-    }, [token, setLoading])
+    }, [token, project, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)
@@ -46,43 +52,48 @@ export default function ProfessorsPage() {
 
         if (!id) {
             // POST
-            api.postProfessor(name)
+            api.postProfessor(project.id, name, short, code, color)
                 .then((res) => {
                     const item = {
-                        name,
                         id: res.data.id,
+                        name,
+                        short,
+                        code,
+                        color,
                         created_at: '--'
                     }
 
-                    setItems((prev) => [...prev, item])
+                    setProfessors((prev) => [...prev, item])
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         } else {
             // PUT
-            api.putProfessor(id, name)
+            api.putProfessor(project.id, id, name, short, code, color)
                 .then((res) => {
-                    setItems(
-                        items.map((item) =>
-                            item.id === id ? { ...item, name } : item
+                    setProfessors(
+                        professors.map((item) =>
+                            item.id === id
+                                ? { ...item, name, short, code, color }
+                                : item
                         )
                     )
                 })
+                .then(onReset)
                 .catch((err) => {
                     showAlert(err.response.data.message)
                 })
         }
-
-        onReset()
     }
 
     const onRemove = () => {
         hideAlert()
 
-        api.deleteProfessor(id)
+        api.deleteProfessor(project.id, id)
             .then((res) => {
-                setItems((prev) => prev.filter((item) => item.id !== id))
+                setProfessors((prev) => prev.filter((item) => item.id !== id))
             })
             .catch((err) => {
                 showAlert(err.response.data.message)
@@ -95,12 +106,18 @@ export default function ProfessorsPage() {
         hideAlert()
         setId('')
         setName('')
+        setShort('')
+        setCode('')
+        setColor('#000000')
     }
 
     const onLoadItem = (item) => {
         hideAlert()
         setId(item.id)
         setName(item.name)
+        setShort(item.short)
+        setCode(item.code)
+        setColor(item.color)
     }
 
     return (
@@ -131,24 +148,81 @@ export default function ProfessorsPage() {
                                 </Alert>
                             )}
                             <form onSubmit={onSubmit}>
-                                {/* Name */}
-                                <div className="mb-3">
-                                    <label
-                                        htmlFor="name-input"
-                                        className="form-label"
-                                    >
-                                        Nome
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name-input"
-                                        className="form-control"
-                                        required={true}
-                                        value={name}
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
-                                    />
+                                <div className="row mb-3">
+                                    {/* Name */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="name-input"
+                                            className="form-label"
+                                        >
+                                            Nome*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="name-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={name}
+                                            onChange={(e) =>
+                                                setName(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Short */}
+                                    <div className="col-3">
+                                        <label
+                                            htmlFor="short-input"
+                                            className="form-label"
+                                        >
+                                            Abrev.*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="short-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={short}
+                                            maxLength="20"
+                                            onChange={(e) =>
+                                                setShort(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="row mb-3">
+                                    {/* Code */}
+                                    <div className="col">
+                                        <label
+                                            htmlFor="code-input"
+                                            className="form-label"
+                                        >
+                                            SIAPE
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="code-input"
+                                            className="form-control"
+                                            required={false}
+                                            value={code}
+                                            onChange={(e) =>
+                                                setCode(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    {/* Color */}
+                                    <div className="col-3">
+                                        <label className="form-label">
+                                            Cor*
+                                        </label>
+
+                                        <ColorChooser
+                                            color={color}
+                                            onChange={setColor}
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Buttons */}
@@ -189,8 +263,8 @@ export default function ProfessorsPage() {
                                 Lista de Professores
                             </p>
 
-                            {items.map((item) => (
-                                <Item
+                            {professors.map((item) => (
+                                <ProfessorItem
                                     key={item.id}
                                     item={item}
                                     onClick={() => onLoadItem(item)}

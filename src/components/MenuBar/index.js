@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../providers/contexts/context'
 import LoadBar from '../LoadBar'
 
-import logo from '../../assets/img/logo64.png'
 import './style.css'
 
 export default function MenuBar() {
@@ -23,23 +22,25 @@ export default function MenuBar() {
             <div className="navbar navbar-expand bg-white border-bottom">
                 <div className="container-xl">
                     <span className="logo d-flex align-items-center gap-2 navbar-brand">
-                        <img src={logo} alt="Logo" />
-                        <div className="d-flex flex-column">
-                            <span>Schdler</span>
-                            <small>by Vaux Gomes</small>
-                        </div>
+                        <span>Schdler</span>
                     </span>
 
                     <ul className="navbar-nav">
                         <li className="nav-item">
+                            <NavLink to="/" className={getMenuClass}>
+                                Projetos
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item">
                             <NavLink to="/boards" className={getMenuClass}>
-                                Quadros
+                                Grade
                             </NavLink>
                         </li>
 
                         <li className="nav-item">
                             <NavLink to="/blocks" className={getMenuClass}>
-                                Blocos
+                                Alocação
                             </NavLink>
                         </li>
 
@@ -51,7 +52,7 @@ export default function MenuBar() {
                             }
                         >
                             <span className="nav-link dropdown-toggle">
-                                Componentes
+                                Configuração
                             </span>
 
                             <ul
@@ -85,13 +86,20 @@ export default function MenuBar() {
                                         Locais
                                     </NavLink>
                                 </li>
-                            </ul>
-                        </li>
 
-                        <li className="nav-item">
-                            <NavLink to="/" className={getMenuClass}>
-                                Projetos
-                            </NavLink>
+                                <li>
+                                    <hr className="dropdown-divider" />
+                                </li>
+
+                                <li>
+                                    <NavLink
+                                        to="/timetables"
+                                        className={getSubmenuClass}
+                                    >
+                                        Períodos
+                                    </NavLink>
+                                </li>
+                            </ul>
                         </li>
 
                         <li className="nav-item">

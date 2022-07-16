@@ -22,7 +22,7 @@ export default function BlockBuilder({ professors, modules, onSubmit }) {
                     <div className="mb-2">
                         <small className="text-secondary">Disciplina</small>
                         <select
-                            className="form-select form-select"
+                            className="form-select"
                             value={module_}
                             onChange={(e) => setModule(e.target.value)}
                         >

@@ -65,3 +65,33 @@ body {
     color: #394d64;
     background-color: var(--gray-light) !important;
 }
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.item:hover {
+    cursor: pointer;
+    background: var(--gray-light);
+}
+
+.item-icon {
+    width: 35px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--secondary);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-icon span {
+    display: block;
+}
