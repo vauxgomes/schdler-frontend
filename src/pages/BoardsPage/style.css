@@ -3,13 +3,20 @@
 .boards-page {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-areas: 'boards boards boards tools';
+    grid-template-areas:
+        'tools tools tools tools'
+        'boards boards boards boards';
     gap: var(--sp-3);
 }
 
 /* TOOLS */
 .tools-container {
     grid-area: tools;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+
     background-color: white;
     padding: var(--sp-4);
     border-radius: 0.375rem;
@@ -129,7 +136,7 @@
 
 .block .professor {
     display: block;
-    
+
     color: var(--gray);
     font-size: var(--fs-sm);
 }
@@ -162,4 +169,10 @@
 
 .block.conflict .icon {
     color: #f79645;
+}
+
+@media (min-width: 768px) {
+    .boards-page {
+        grid-template-areas: 'boards boards boards tools';
+    }
 }

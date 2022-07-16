@@ -168,7 +168,40 @@ export default function BoardsPage() {
                     </div>
                 </div>
 
-                <div className="tools-container shadow-sm">Tools</div>
+                <div className="tools-container shadow-sm">
+                    <header className="d-flex align-items-center justify-content-between">
+                        <h6 className="m-0">Controle</h6>
+                        <i className="fas fa-columns"></i>
+                    </header>
+
+                    {/* Buttons */}
+                    <div className='d-flex flex-wrap gap-2'>
+                        <button className="btn btn-sm btn-secondary">
+                            <i className="fa-solid fa-circle-plus"></i>
+                            <span> Quadro</span>
+                        </button> 
+
+                        <button className="btn btn-sm btn-secondary">
+                            <i className="fa-solid fa-circle-plus"></i>
+                            <span> Quadro</span>
+                        </button>
+
+                        <button className="btn btn-sm btn-secondary">
+                            <i className="fa-solid fa-circle-plus"></i>
+                            <span> Quadro</span>
+                        </button>
+
+                        <button className="btn btn-sm btn-secondary">
+                            <i className="fa-solid fa-circle-plus"></i>
+                            <span> Quadro</span>
+                        </button>
+
+                        <button className="btn btn-sm btn-secondary">
+                            <i className="fa-solid fa-circle-plus"></i>
+                            <span> Quadro</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </>
     )
