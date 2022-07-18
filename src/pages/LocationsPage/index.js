@@ -15,7 +15,7 @@ export default function LocationsPage() {
     const [short, setShort] = useState('')
     const [code, setCode] = useState('')
     const [color, setColor] = useState('#000000')
-    const [capacity, setCapacity] = useState(1)
+    const [capacity, setCapacity] = useState(30)
 
     const [locations, setLocations] = useState([])
 
@@ -118,7 +118,7 @@ export default function LocationsPage() {
         setShort('')
         setCode('')
         setColor('#000000')
-        setCapacity(1)
+        setCapacity(30)
     }
 
     const onLoadItem = (item) => {
@@ -252,7 +252,8 @@ export default function LocationsPage() {
 
                                         <ColorChooser
                                             color={color}
-                                            onChange={setColor}
+                                            setColor={setColor}
+                                            required={true}
                                         />
                                     </div>
                                 </div>

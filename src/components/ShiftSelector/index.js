@@ -1,28 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const ShiftSelector = React.forwardRef((props, ref) => {
-    const [shift, setShift] = useState('')
+export const shifts = {
+    morning: { name: 'Manhã', color: '' },
+    daytime: { name: 'Diúrno', color: '' },
+    afternoon: { name: 'Tarde', color: '' },
+    night: { name: 'Noite', color: '' }
+}
 
-    const getShift = () => {
-        return shift
-    }
-
+export default function ShiftSelector({ required, shift, setShift }) {
     return (
         <select
             className="form-select"
             value={shift}
+            required={required}
             onChange={(e) => setShift(e.target.value)}
         >
             <option value="" disabled={true}>
                 Selecione
             </option>
 
-            <option value={'morning'}>Manhã</option>
-            <option value={'daytime'}>Diúrno</option>
-            <option value={'afternoon'}>Tarde</option>
-            <option value={'night'}>Noite</option>
+            {Object.keys(shifts).map((k, index) => (
+                <option value={k} key={index}>
+                    {shifts[k].name}
+                </option>
+            ))}
         </select>
     )
-})
-
-export default ShiftSelector
+}

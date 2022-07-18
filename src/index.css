@@ -82,8 +82,9 @@ body {
 }
 
 .item-icon {
-    width: 35px;
-    height: 30px;
+    align-self: center;
+
+    padding: var(--sp-2);
     border-radius: 50%;
     background: var(--secondary);
 

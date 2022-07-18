@@ -220,7 +220,8 @@ export default function ProfessorsPage() {
 
                                         <ColorChooser
                                             color={color}
-                                            onChange={setColor}
+                                            setColor={setColor}
+                                            required={true}
                                         />
                                     </div>
                                 </div>

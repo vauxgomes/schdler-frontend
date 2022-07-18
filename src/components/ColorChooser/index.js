@@ -34,7 +34,11 @@ const colors = [
     '#03071e'
 ]
 
-export default function ColorChooser({ color = '#03071e', onChange }) {
+export default function ColorChooser({
+    color = colors[0],
+    setColor,
+    required
+}) {
     return (
         <div className="color-container">
             <ColorItem color={color} />
@@ -44,7 +48,8 @@ export default function ColorChooser({ color = '#03071e', onChange }) {
                     <ColorItem
                         color={color}
                         key={key}
-                        onClick={() => onChange(color)}
+                        required={required}
+                        onClick={() => setColor(color)}
                     />
                 ))}
             </div>

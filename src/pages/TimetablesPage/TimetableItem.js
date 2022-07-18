@@ -1,19 +1,24 @@
 import React from 'react'
+import { shifts } from '../../components/ShiftSelector'
 
-export default function Item({ item, onClick }) {
+export default function TimetableItem({ item, onClick }) {
     return (
         <div
             onClick={onClick}
-            className="d-flex align-items-start justify-content-start gap-3 py-3 px-3 border-top location-item"
+            className="item d-flex align-items-center justify-content-start gap-2 p-2 border-top"
         >
-            <i className="text-secondary mt-1 fa-solid fa-location-dot"></i>
-
-            <div className="d-flex align-items-start  justify-content-between gap-3 w-100">
-                <strong>{item.name}</strong>
-                <button className="btn py-0 px-0">
-                    <i className="fas fa-ellipsis-v mt-1"></i>
-                </button>
+            <div className="item-icon">
+                <i className="text-white far fa-clock"></i>
             </div>
+
+            <div className="d-flex flex-column w-100">
+                <strong>{shifts[item.shift].name}</strong>
+                <small>
+                    {item.start.slice(0, 5)} - {item.end.slice(0, 5)}
+                </small>
+            </div>
+
+            <i className="fas fa-ellipsis-v mt-1"></i>
         </div>
     )
 }

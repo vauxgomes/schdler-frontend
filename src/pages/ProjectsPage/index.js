@@ -143,7 +143,7 @@ export default function ProjectsPage() {
                                         value={projectId}
                                         onChange={onChangeProject}
                                     >
-                                        <option value="" disabled>
+                                        <option value="">
                                             Selecione um Projeto
                                         </option>
 

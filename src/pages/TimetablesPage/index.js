@@ -1,6 +1,6 @@
 // https://dribbble.com/shots/16083913-Account-Settings-Template-Webpixels
 
-import React, { forwardRef, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import Alert, { AlertTypes } from '../../components/Alert'
 import ShiftSelector from '../../components/ShiftSelector'
@@ -13,13 +13,12 @@ export default function TimetablesPage() {
     const [id, setId] = useState('')
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
+    const [shift, setShift] = useState('')
 
     const [timetables, setTimetables] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
-
-    const refShiftSelector = React.createRef()
 
     const { token, project, setLoading } = useContext(Context)
 
@@ -28,12 +27,8 @@ export default function TimetablesPage() {
 
         api.setToken(token)
         api.getTimetables(project.id)
-            .then((res) => {
-                setTimetables(res)
-            })
-            .catch((err) => {
-                console.log(err.response.data.message)
-            })
+            .then((res) => setTimetables(res))
+            .catch((err) => console.log(err.response.data.message))
             .then(() => setLoading(false))
     }, [token, project, setLoading])
 
@@ -49,14 +44,12 @@ export default function TimetablesPage() {
     const onSubmit = (e) => {
         e.preventDefault()
         hideAlert()
-
-        console.log(refShiftSelector)
     }
 
     const onRemove = () => {
         hideAlert()
 
-        api.deleteLocation(id)
+        api.deleteTimetable(project.id, id)
             .then((res) => {
                 setTimetables((prev) => prev.filter((item) => item.id !== id))
             })
@@ -72,22 +65,22 @@ export default function TimetablesPage() {
         setId('')
         setStart('')
         setEnd('')
-        refShiftSelector.current?.setShift('')
+        setShift('')
     }
 
     const onLoadItem = (item) => {
         hideAlert()
         setId(item.id)
-        setStart(item.name)
+        setStart(item.start)
         setEnd(item.end)
-        refShiftSelector.current?.setShift(item.shift)
+        setShift(item.shift)
     }
 
     return (
         <>
             <header className="d-flex justify-content-between align-items-center mb-3">
                 <h3>Períodos</h3>
-                <i className="text-secondary fa-solid fa-location-dot"></i>
+                <i className="text-secondary far fa-clock"></i>
             </header>
 
             <div className="container-fluid">
@@ -98,7 +91,8 @@ export default function TimetablesPage() {
                             <p className="text-secondary small">
                                 Os períodos são intervalos de tempos associados
                                 a um dos turnos (matutino, vespertino, noturno
-                                ou diúrno).
+                                ou diúrno). Essa configuração torna possível a
+                                criação das grades de horários.
                             </p>
 
                             {/* Alert */}
@@ -112,25 +106,57 @@ export default function TimetablesPage() {
                             )}
                             <form onSubmit={onSubmit}>
                                 {/* Name */}
-                                <div className="mb-3">
-                                    <ShiftSelector ref={refShiftSelector} />
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label className="form-label">
+                                            Turno*
+                                        </label>
+                                        <ShiftSelector
+                                            shift={shift}
+                                            setShift={setShift}
+                                            required={true}
+                                        />
+                                    </div>
+                                </div>
 
-                                    <label
-                                        htmlFor="name-input"
-                                        className="form-label"
-                                    >
-                                        Nome
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="name-input"
-                                        className="form-control"
-                                        // required={true}
-                                        value={start}
-                                        onChange={(e) =>
-                                            setStart(e.target.value)
-                                        }
-                                    />
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label
+                                            htmlFor="start-input"
+                                            className="form-label"
+                                        >
+                                            Início
+                                        </label>
+                                        <input
+                                            type="time"
+                                            id="start-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={start}
+                                            onChange={(e) =>
+                                                setStart(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="col">
+                                        <label
+                                            htmlFor="end-input"
+                                            className="form-label"
+                                        >
+                                            Fim
+                                        </label>
+                                        <input
+                                            type="time"
+                                            id="end-input"
+                                            className="form-control"
+                                            required={true}
+                                            value={end}
+                                            onChange={(e) =>
+                                                setEnd(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Buttons */}

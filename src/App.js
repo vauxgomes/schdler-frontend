@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import MenuBar from './components/MenuBar'
-import ColorChooser from './components/ColorChooser'
 
 import LoginPage from './pages/LoginPage'
 import ProjectsPage from './pages/ProjectsPage'

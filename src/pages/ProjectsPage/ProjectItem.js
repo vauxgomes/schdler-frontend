@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Item({ item, onClick }) {
+export default function ProjectItem({ item, onClick }) {
     return (
         <div
             onClick={onClick}
@@ -10,10 +10,11 @@ export default function Item({ item, onClick }) {
                 <i className="text-white fas fa-project-diagram"></i>
             </div>
 
-            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+            <div className="w-100">
                 <strong>{item.name}</strong>
-                <i className="fas fa-ellipsis-v mt-1"></i>
             </div>
+            
+            <i className="fas fa-ellipsis-v mt-1"></i>
         </div>
     )
 }

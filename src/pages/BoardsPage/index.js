@@ -8,7 +8,7 @@ import './style.css'
 export default function BoardsPage() {
     const { token, project, setLoading } = useContext(Context)
 
-    const [boards, setBoards] = useState([1, 2, 3, 4, 5, 6])
+    const [boards, setBoards] = useState([])
     const [blocks, setBlocks] = useState([])
     const [search, setSearch] = useState('')
 
@@ -17,7 +17,10 @@ export default function BoardsPage() {
 
         api.setToken(token)
         api.getBlocks(project.id)
-            .then((res) => setBlocks(res))
+            .then((res) => {
+                setBlocks(res)
+                console.log(res)
+            })
             .catch((err) => console.log(err.response.data.message))
             .then(() => setLoading(false))
     }, [token, project, setLoading])
@@ -31,9 +34,16 @@ export default function BoardsPage() {
 
             <div className="boards-page">
                 <div className="boards-container">
-                    {boards.map((board) => (
-                        <Board />
+                    {boards.map((board, key) => (
+                        <Board board={board} key={key} />
                     ))}
+
+                    {boards.length === 0 && (
+                        <p className="text-muted">
+                            Adicione um quadro no botão{' '}
+                            <i className="text-primary fa-solid fa-circle-plus"></i>
+                        </p>
+                    )}
                 </div>
 
                 <div className="tools-container shadow-sm">
@@ -76,8 +86,8 @@ export default function BoardsPage() {
                                         .toLowerCase()
                                         .includes(search)
                             )
-                            .map((block) => (
-                                <Block block={block} key={block.id} />
+                            .map((block, key) => (
+                                <Block block={block} key={key} />
                             ))}
                     </fieldset>
                 </div>
@@ -90,7 +100,9 @@ function Block({ block }) {
     return (
         <div id={block.id} className="block w-100" draggable="true">
             <span className="module text-truncate">{block.module_name}</span>
-            <span className="professor text-truncate">{block.professor_name}</span>
+            <span className="professor text-truncate">
+                {block.professor_name}
+            </span>
             <i className="grip fas fa-grip-lines fa-sm"></i>
         </div>
     )

@@ -11,7 +11,7 @@
 .color-grid {
     position: absolute;
     top: 37px;
-    left: 0;
+    right: 0px;
 
     z-index: 100;
 
@@ -37,4 +37,11 @@
 
 .color-grid .color-item:hover {
     border: 1px solid black;
+}
+
+@media (min-width: 576px) {
+    .color-grid {
+        right: initial;
+        left: 0px;
+    }
 }
