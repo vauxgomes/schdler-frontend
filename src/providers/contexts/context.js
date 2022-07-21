@@ -2,21 +2,25 @@ import React, { useState } from 'react'
 
 export const Context = React.createContext()
 export default function ContextProvider({ children }) {
-    // States
-    const [token, setToken__] = useState(localStorage.getItem('token'))
-    const [project, setProject__] = useState(
+    // Token
+    const [token, setToken] = useState(localStorage.getItem('token'))
+
+    // Project
+    const [projects, setProjects] = useState([])
+    const [project, setProject] = useState(
         JSON.parse(localStorage.getItem('project'))
     )
 
+    // Status
     const [isLoading, setLoading] = useState(true)
 
-    const setToken = (token) => {
-        setToken__(token)
+    const setTokenAndStore = (token) => {
+        setToken(token)
         localStorage.setItem('token', token)
     }
 
-    const setProject = (project) => {
-        setProject__(project)
+    const setProjectAndStore = (project) => {
+        setProject(project)
         localStorage.setItem('project', JSON.stringify(project))
     }
 
@@ -25,10 +29,13 @@ export default function ContextProvider({ children }) {
         <Context.Provider
             value={{
                 token,
-                setToken,
+                setToken: setTokenAndStore,
 
                 project,
-                setProject,
+                setProject: setProjectAndStore,
+
+                projects,
+                setProjects,
 
                 isLoading,
                 setLoading

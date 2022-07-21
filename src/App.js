@@ -1,5 +1,11 @@
 import React, { useContext } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {
+    BrowserRouter,
+    Navigate,
+    Route,
+    Routes,
+    useLocation
+} from 'react-router-dom'
 
 import MenuBar from './components/MenuBar'
 
@@ -23,10 +29,15 @@ const DummyComponent = () => {
 
 // Main Component
 function MainComponent() {
-    const { token } = useContext(Context)
+    const location = useLocation()
+    const { token, project } = useContext(Context)
 
     if (!token) {
         return <LoginPage />
+    }
+
+    if (location.pathname !== '/' && !project) {
+        return <Navigate to={'/'} />
     }
 
     return (

@@ -14,15 +14,17 @@ export default function BoardsPage() {
 
     useEffect(() => {
         setLoading(true)
-
         api.setToken(token)
-        api.getBlocks(project.id)
-            .then((res) => {
-                setBlocks(res)
-                console.log(res)
-            })
-            .catch((err) => console.log(err.response.data.message))
-            .then(() => setLoading(false))
+        Promise.all([
+            api
+                .getBlocks(project.id)
+                .then((res) => setBlocks(res))
+                .catch((err) => console.log(err.response.data.message)),
+            api
+                .getBoards(project.id)
+                .then((res) => setBoards(res))
+                .catch((err) => console.log(err.response.data.message))
+        ]).then(() => setLoading(false))
     }, [token, project, setLoading])
 
     return (

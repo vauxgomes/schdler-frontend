@@ -7,7 +7,7 @@ export default function ProjectItem({ item, onClick }) {
             className="item d-flex align-items-center justify-content-between gap-2 p-2 border-top"
         >
             <div className="item-icon">
-                <i className="text-white fas fa-project-diagram"></i>
+                <i className="text-white fas fa-pencil-ruler"></i>
             </div>
 
             <div className="w-100">

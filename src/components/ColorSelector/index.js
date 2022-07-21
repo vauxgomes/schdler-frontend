@@ -34,7 +34,7 @@ const colors = [
     '#03071e'
 ]
 
-export default function ColorChooser({
+export default function ColorSelector({
     color = colors[0],
     setColor,
     required

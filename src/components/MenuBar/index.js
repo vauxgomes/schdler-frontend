@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Context } from '../../providers/contexts/context'
 import LoadBar from '../LoadBar'
-
-import './style.css'
+import ProjectSelector from '../ProjectSelector'
 
 export default function MenuBar() {
     const [showComponentsDropdown, setShowComponentsDropdown] = useState(false)
@@ -14,7 +13,9 @@ export default function MenuBar() {
     }
 
     const getSubmenuClass = ({ isActive }) => {
-        return `dropdown-item ${isActive ? 'active ' : ''}`
+        return `dropdown-item d-flex align-items-center gap-2 ${
+            isActive ? 'active ' : ''
+        }`
     }
 
     return (
@@ -40,7 +41,7 @@ export default function MenuBar() {
 
                         <li className="nav-item">
                             <NavLink to="/blocks" className={getMenuClass}>
-                                Alocação
+                                Blocos
                             </NavLink>
                         </li>
 
@@ -52,7 +53,7 @@ export default function MenuBar() {
                             }
                         >
                             <span className="nav-link dropdown-toggle">
-                                Configuração
+                                {'Elementos   '}
                             </span>
 
                             <ul
@@ -65,7 +66,8 @@ export default function MenuBar() {
                                         to="/professors"
                                         className={getSubmenuClass}
                                     >
-                                        Professores
+                                        <i className="fa-solid fa-chalkboard-user fa-xs"></i>
+                                        <span>Professores</span>
                                     </NavLink>
                                 </li>
 
@@ -74,7 +76,8 @@ export default function MenuBar() {
                                         to="/modules"
                                         className={getSubmenuClass}
                                     >
-                                        Disciplinas
+                                        <i className="fa-solid fa-book fa-xs"></i>
+                                        <span>Disciplinas</span>
                                     </NavLink>
                                 </li>
 
@@ -83,7 +86,8 @@ export default function MenuBar() {
                                         to="/locations"
                                         className={getSubmenuClass}
                                     >
-                                        Locais
+                                        <i className="fa-solid fa-location-dot fa-xs"></i>
+                                        <span>Locais</span>
                                     </NavLink>
                                 </li>
 
@@ -96,16 +100,25 @@ export default function MenuBar() {
                                         to="/timetables"
                                         className={getSubmenuClass}
                                     >
+                                        <i className="far fa-clock fa-xs"></i>
                                         Períodos
                                     </NavLink>
                                 </li>
                             </ul>
                         </li>
 
+                        <li className="nav-item d-flex">
+                            <ProjectSelector
+                                className={
+                                    'form-select-sm border border-primary'
+                                }
+                            />
+                        </li>
+
                         <li className="nav-item">
                             <Link
                                 to="/"
-                                className="nav-link btn"
+                                className="nav-link"
                                 onClick={() => setToken(null)}
                             >
                                 <i className="fas fa-sign-out-alt"></i>

@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import Alert, { AlertTypes } from '../../components/Alert'
-import ColorChooser from '../../components/ColorChooser'
+import ColorSelector from '../../components/ColorSelector'
 import ProfessorItem from './ProfessorItem'
 
 import { Context } from '../../providers/contexts/context'
@@ -218,7 +218,7 @@ export default function ProfessorsPage() {
                                             Cor*
                                         </label>
 
-                                        <ColorChooser
+                                        <ColorSelector
                                             color={color}
                                             setColor={setColor}
                                             required={true}

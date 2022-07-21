@@ -6,15 +6,15 @@ import ProjectItem from './ProjectItem'
 
 import { Context } from '../../providers/contexts/context'
 import api from '../../providers/services/api'
+import ProjectSelector from '../../components/ProjectSelector'
+import { isCompositeComponent } from 'react-dom/test-utils'
 
 export default function ProjectsPage() {
-    const { token, project, setProject, setLoading } = useContext(Context)
+    const { token, project, setProject, projects, setProjects, setLoading } =
+        useContext(Context)
 
     const [id, setId] = useState('')
     const [name, setName] = useState('')
-    const [projectId, setProjectId] = useState(project?.id || '')
-
-    const [projects, setProjects] = useState([])
 
     const [alertStatus, setAlertStatus] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
@@ -31,7 +31,7 @@ export default function ProjectsPage() {
                 console.log(err.response.data.message)
             })
             .then(() => setLoading(false))
-    }, [token, setLoading])
+    }, [token, setProjects, setLoading])
 
     const hideAlert = () => {
         setAlertStatus(false)
@@ -54,6 +54,10 @@ export default function ProjectsPage() {
                         id: res.data.id,
                         code: res.data.code,
                         name
+                    }
+
+                    if (projects.length === 0) {
+                        setProject(item)
                     }
 
                     setProjects((prev) => [...prev, item])
@@ -86,10 +90,7 @@ export default function ProjectsPage() {
             .then((res) => {
                 setProjects((prev) => prev.filter((item) => item.id !== id))
 
-                if (id === projectId) {
-                    setProjectId('')
-                    setProject(null)
-                }
+                if (project && project.id === id) setProject('')
             })
             .catch((err) => {
                 showAlert(err.response.data.message)
@@ -110,20 +111,11 @@ export default function ProjectsPage() {
         setName(item.name)
     }
 
-    const onChangeProject = (e) => {
-        const idx = projects.findIndex(
-            (item) => item.id === Number(e.target.value)
-        )
-
-        setProjectId(projects[idx].id)
-        setProject(projects[idx])
-    }
-
     return (
         <>
             <header className="d-flex justify-content-between align-items-center mb-3">
                 <h3>Projetos</h3>
-                <i className="text-secondary fas fa-project-diagram"></i>
+                <i className="text-secondary fas fa-pencil-ruler"></i>
             </header>
 
             <div className="container-fluid">
@@ -138,24 +130,7 @@ export default function ProjectsPage() {
                                         Um único projeto pode estar ativo
                                     </p>
 
-                                    <select
-                                        className="form-select"
-                                        value={projectId}
-                                        onChange={onChangeProject}
-                                    >
-                                        <option value="">
-                                            Selecione um Projeto
-                                        </option>
-
-                                        {projects.map((item) => (
-                                            <option
-                                                value={item.id}
-                                                key={item.id}
-                                            >
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <ProjectSelector />
                                 </div>
                             </div>
 

@@ -243,6 +243,42 @@ class API {
         )
         return response.data
     }
+
+    /* BOARDS */
+
+    async getBoards(project_id) {
+        const response = await this.api.get(
+            `/projects/${project_id}/boards`,
+            this.config
+        )
+        return response.data
+    }
+
+    async postBoard(project_id, name, shift) {
+        const response = await this.api.post(
+            `/projects/${project_id}/boards`,
+            { name, shift },
+            this.config
+        )
+        return response.data
+    }
+
+    async putBoard(project_id, id, name, shift) {
+        const response = await this.api.put(
+            `/projects/${project_id}/boards/${id}`,
+            { name, shift },
+            this.config
+        )
+        return response.data
+    }
+
+    async deleteBoard(project_id, block_id) {
+        const response = await this.api.delete(
+            `/projects/${project_id}/boards/${block_id}`,
+            this.config
+        )
+        return response.data
+    }
 }
 
 export default new API()
